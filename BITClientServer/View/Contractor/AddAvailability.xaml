@@ -1,0 +1,62 @@
+﻿<Window x:Class="BITClientServer.View.Contractor.AddAvailability"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BITClientServer.View.Contractor"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="Add Contractor Availability" Height="450" Width="630" Icon="../../Resources/favicon.ico">
+    <Grid Width="600" Height="400" Background="#EBEEF2" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="57"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Background="#F47840" Height="56" VerticalAlignment="Top" ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Content="NEW AVAILABILITY" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+        </Grid>
+        <ListView Grid.Row="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" ItemsSource="{Binding ContractorAvailabilityCollection, Mode=OneTime}" SelectedItem ="{Binding SelectedContractorAvailability, Mode=TwoWay}" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Availability ID" DisplayMemberBinding="{Binding Path=AvailabilityId, Mode=TwoWay}"/>
+                    <GridViewColumn Header="Contractor ID" DisplayMemberBinding="{Binding Path=ContractorId, Mode=TwoWay}"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Path=Date, Mode=TwoWay}"/>
+                    <GridViewColumn Header="StartTime" DisplayMemberBinding="{Binding Path=StartTime, Mode=TwoWay}"/>
+                    <GridViewColumn Header="Hours" DisplayMemberBinding="{Binding Path=Hours, Mode=TwoWay}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Content="Date:" VerticalAlignment="Center" Margin="10,0,0,0" Width="75" HorizontalAlignment="Left"/>
+            <DatePicker Grid.Row="0" Grid.Column="0" Height="25" Width="105" HorizontalAlignment="Left" Margin="65,16,0,15.765"  Text="{Binding ChangeContractorAvailability.Date, Mode=TwoWay}" DisplayDateStart="{Binding today}"/>
+            <Label Grid.Row="0" Grid.Column="1" Content="Start Time:" VerticalAlignment="Center" Margin="10,0,0,0" Width="75" HorizontalAlignment="Left"/>
+            <xctk:TimePicker Grid.Row="0" Grid.Column="1" Height="25" Width="106" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="90,0,0,0" Text="{Binding ChangeContractorAvailability.StartTime, Mode=TwoWay}" StartTime="9:00" EndTime="17:00"/>
+            <Label Grid.Column="2" Content="Hours:" VerticalAlignment="Center" Margin="10,0,0,0" Width="75" HorizontalAlignment="Left"/>
+            <TextBox Grid.Column="2"  Height="25" Width="100" HorizontalAlignment="Left" Margin="70,0,0,0" Text="{Binding ChangeContractorAvailability.Hours, Mode=TwoWay}" TabIndex="1"/>
+
+        </Grid>
+        <Grid Grid.Row="3" Margin="0,0,0,10">
+            <Button Height="25" Width="100" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Content="Add" Command="{Binding AddCommand}" TabIndex="2"/>
+            <Button Height="25" Width="100" HorizontalAlignment="Right" Margin="0,0,130,10" VerticalAlignment="Bottom" Content="Update" Command="{Binding UpdateCommand}" TabIndex="3"/>
+            <Button Height="25" Width="100" HorizontalAlignment="Right" Margin="0,0,250,10" VerticalAlignment="Bottom" Content="Delete" Command="{Binding DeleteCommand}" TabIndex="4"/>
+        </Grid>
+        <Border BorderBrush="#4B7885" BorderThickness="1" Grid.RowSpan="4"/>
+    </Grid>
+
+</Window>

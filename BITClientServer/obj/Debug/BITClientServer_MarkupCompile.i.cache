@@ -1,0 +1,20 @@
+﻿BITClientServer
+
+
+winexe
+C#
+.cs
+C:\Users\Sarang Shin\Documents\Diploma\BIT\CS\BITClientServerV1.5\BITClientServer\obj\Debug\
+BITClientServer
+none
+false
+DEBUG;TRACE
+C:\Users\Sarang Shin\Documents\Diploma\BIT\CS\BITClientServerV1.5\BITClientServer\App.xaml
+12-1597097957
+
+60784016635
+30-1005760826
+View\LoginWindow.xaml;View\Client\AddClient.xaml;View\Client\UpdateClient.xaml;View\Contractor\AddAvailability.xaml;View\Contractor\AddContractor.xaml;View\Contractor\UpdateContractor.xaml;View\Coordinator\AddCoordinator.xaml;View\Coordinator\UpdateCoordinator.xaml;View\Client\AddJob.xaml;View\Job\FindContractor.xaml;View\Job\UpdateJob.xaml;View\MainMenu.xaml;
+
+False
+

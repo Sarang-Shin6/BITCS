@@ -1,0 +1,31 @@
+﻿<Window x:Class="BITClientServer.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BITClientServer"
+        mc:Ignorable="d"
+        Title="BIT Services Login" Height="500" Width="700" WindowStartupLocation="CenterScreen"
+        x:Name="LoginWindow" Icon="../Resources/favicon.ico">
+    <Grid Background="#FFEBEEF2">
+        <StackPanel HorizontalAlignment="Center" Height="450" Margin="0,0,0,0" VerticalAlignment="Center" Width="400">
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Height="158" Margin="0,0,0,0" Width="347" Source="../Resources/bit_logo_transparent.png" />
+            <Label Content="Welcome to BIT Services" HorizontalAlignment="Center" HorizontalContentAlignment="Center" Margin="0,0,0,10" Width="375" FontSize="16" FontFamily="Calibri"/>
+            <Label Content="Email Address" HorizontalContentAlignment="Center" FontFamily="Calibri" FontSize="14"/>
+            <TextBox x:Name="txtEmail" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="29" TextWrapping="Wrap" Text="{Binding Username}" Width="200" BorderBrush="Black" Background="#FFEBEEF2" Margin="100,0,100,10" FontSize="13" Foreground="#FF888888" SelectionBrush="Black" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+            <Label Content="Password" HorizontalContentAlignment="Center" FontFamily="Calibri" FontSize="14"/>
+            <PasswordBox HorizontalContentAlignment="Center"  VerticalContentAlignment="Center" Width="200" Height="29"  BorderBrush="black" Background="#FFEBEEF2" FontSize="13" Foreground="#FF888888" SelectionBrush="Black" PasswordChanged="PasswordBox_PasswordChanged" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton" />
+            <Grid Height="80"  Margin="0,15,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalAlignment="Right" Width="75" Content="Login" Height="30" Margin="0,0,20,0" FontFamily="Calibri" FontSize="14" BorderBrush="#FF4B7885" Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=LoginWindow}" IsDefault="True"/>
+                <Button Grid.Column="1" HorizontalAlignment="Left" Margin="20,0,0,0" Width="75" Content="Exit" Height="30" FontFamily="Calibri" FontSize="14" BorderBrush="#FF4B7885" Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=LoginWindow}"/>
+            </Grid>
+
+
+        </StackPanel>
+
+    </Grid>
+</Window>

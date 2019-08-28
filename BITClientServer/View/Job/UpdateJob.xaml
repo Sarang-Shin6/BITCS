@@ -1,0 +1,86 @@
+﻿<Window x:Class="BITClientServer.View.Job.UpdateJob"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sessions="clr-namespace:BITClientServer.Model" 
+        xmlns:local="clr-namespace:BITClientServer.View.Job"
+        mc:Ignorable="d"
+        Title="Job Details" Height="500" Width="780" Icon="../../Resources/favicon.ico"
+        x:Name="UpdateJobWindow">
+    <Grid  Width="750" Height="450" Background="#EBEEF2" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="57"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Background="#F47840" Height="56" VerticalAlignment="Top" ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.1*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Content="JOB DETAILS" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+        </Grid>
+
+        <Grid HorizontalAlignment="Left" Height="370" Margin="10,73,0,0" Width="730" VerticalAlignment="Top" Grid.Row="0"
+              Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Job ID:" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Height="25" IsReadOnly="True" Text="{Binding SelectedJob.JobId, Mode=TwoWay}" TabIndex="1"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Start Date:" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <DatePicker Grid.Column="1" Grid.Row="1" Height="25" Text="{Binding SelectedStartDate, Mode=TwoWay}" TabIndex="2"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="{Binding StartDateSet}" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="10" VerticalAlignment="Top"/>
+            <Button Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Stretch" Content="Update Start Date"  VerticalAlignment="Top" Command="{Binding UpdateStartDateCommand}" Margin="20,0,0,0" />
+            <Label Grid.Column="0" Grid.Row="3" Content="Preferred End Date:" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <Button Grid.Column="1" Grid.Row="4" Height="25" HorizontalAlignment="Stretch" Content="Update Due Date"  VerticalAlignment="Top" Command="{Binding UpdateDueDateCommand}"  Margin="20,0,0,0"/>
+            <DatePicker Grid.Column="1" Grid.Row="3" Height="25" Text="{Binding SelectedEndDate, Mode=TwoWay}" TabIndex="3"/>
+            <Label Grid.Column="0" Grid.Row="4" Content="{Binding EndDateSet}" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="10" VerticalAlignment="Top"/>
+            <Label Grid.Column="0" Grid.Row="5" Content="Estimated Duration:" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="5" Height="25" Text="{Binding SelectedJob.StringEstimatedDuration, Mode=TwoWay}" TabIndex="4"/>
+
+            <Label Grid.Column="3"  Grid.Row="0" Content="Duration:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="0" Height="25" Text="{Binding SelectedJob.StringDuration, Mode=TwoWay}" TabIndex="5"/>
+            <Label Grid.Column="3" Grid.Row="1" Content="Logged Km's:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center" />
+            <TextBox Grid.Column="4" Grid.Row="1" Height="25" Text="{Binding SelectedJob.StringLoggedKm, Mode=TwoWay}" TabIndex="6"/>
+            <Label Grid.Column="3" Grid.Row="2" Content="Job Rating:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="2" Height="25" Text="{Binding SelectedJob.StringJobRating, Mode=TwoWay}" TabIndex="7"/>
+            <Label Grid.Column="3" Grid.Row="3" Content="Status:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center" />
+            <ComboBox Grid.Column="4" Grid.Row="3" Height="25" ItemsSource="{Binding Status.StatusCollection}" SelectedItem="{Binding Status.SelectedStatus, Mode=TwoWay}" DisplayMemberPath="Description" TabIndex="8"/>
+            <Label Grid.Column="3" Grid.Row="4" Content="Feedback:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center" />
+            <TextBox Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" Margin="0,10,0,0" Text="{Binding SelectedJob.Feedback, Mode=TwoWay}" TabIndex="9"/>
+
+            <Label Grid.Column="0" Grid.Row="6" Content="Description:" HorizontalAlignment="Left" Margin="0,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="6" VerticalAlignment="Stretch" Grid.Column="1"  Margin="0,10,0,10" Grid.ColumnSpan="4" Text="{Binding SelectedJob.Description, Mode=TwoWay}" TabIndex="10"/>
+
+            <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="5">
+                <Button Height="25" Width="100" HorizontalAlignment="Right" Content="Update" Margin="0,0,10,0" VerticalAlignment="Center" Command="{Binding UpdateJobCommand}" TabIndex="11"/>
+                <Button Height="25" Width="100" HorizontalAlignment="Right" Content="Assign" Margin="0,0,130,0" VerticalAlignment="Center" Command="{Binding AssignJobCommand}" CommandParameter="{Binding ElementName=UpdateJobWindow}" TabIndex="12"/>
+                <Button x:Name="btnDelete" Height="25" Width="100" HorizontalAlignment="Right" Content="Delete" Margin="0,0,250,0" VerticalAlignment="Center" Command="{Binding DeleteJobCommand}" CommandParameter="{Binding ElementName=UpdateJobWindow}" 
+                        IsEnabled="{x:Static sessions:Session.Admin}" TabIndex="13"/>
+
+            </Grid>
+
+
+
+        </Grid>
+        <!--<Border BorderBrush="#4B7885" BorderThickness="1" Grid.Row="0" Grid.RowSpan="2"/>-->
+    </Grid>
+</Window>

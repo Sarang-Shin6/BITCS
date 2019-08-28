@@ -1,0 +1,112 @@
+﻿<Window x:Class="BITClientServer.View.Client.UpdateClient"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sessions="clr-namespace:BITClientServer.Model"
+        xmlns:local="clr-namespace:BITClientServer.View.Client"
+        mc:Ignorable="d"
+        Title="Client Details" Height="400" Width="1380" WindowStartupLocation="CenterScreen"
+        x:Name="UpdateClientWindow" Icon="../../Resources/favicon.ico">
+    <Grid  Width="1350" Height="350" Background="#EBEEF2" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="#F47840" Height="56" VerticalAlignment="Top" ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Content="CLIENT DETAILS" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+        </Grid>
+
+        <Grid Grid.Column="0" HorizontalAlignment="Left" Height="267" Margin="10,73,0,0" VerticalAlignment="Top" Width="650">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+
+            <Label Grid.Column="0" Content="Company Details:" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="Company Id:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Height="25" Grid.Column="1"  Margin="0,0,0,0" IsReadOnly="True" Text="{Binding SelectedClient.Company.CompanyId,Mode=TwoWay}" TabIndex="1"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Company Name:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedClient.Company.Name,Mode=TwoWay}" TabIndex="2"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="Street:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedClient.Company.Street,Mode=TwoWay}" TabIndex="3"/>
+            <Label Grid.Column="0" Grid.Row="4" Content="Suburb:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedClient.Company.Suburb,Mode=TwoWay}" TabIndex="4"/>
+            <Label Grid.Column="0" Grid.Row="5"  Content="State:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+
+
+            <ComboBox Grid.Row="5" Height="25" Grid.Column="1"  Margin="0,0,0,0" ItemsSource="{Binding Location.StateCollection}" Text="{Binding SelectedClient.Company.State,Mode=TwoWay}"/>
+            <Label Grid.Column="0" Grid.Row="6"  Content="Postcode:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="6" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedClient.Company.Postcode,Mode=TwoWay}" TabIndex="5"/>
+            <Label Grid.Column="3" Grid.Row="1"  Content="Branch:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Height="25" Grid.Column="4"  Margin="0,0,0,0" Text="{Binding SelectedClient.Company.Branch,Mode=TwoWay}" TabIndex="6"/>
+            <Label Grid.Row="2" Content="Description:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Top" Grid.Column="3"/>
+            <TextBox Grid.Column="3" Grid.Row="2" Grid.ColumnSpan="2" Margin="10,30,10,10" Grid.RowSpan="5" Text="{Binding SelectedClient.Company.Description,Mode=TwoWay}" TabIndex="7"/>
+
+
+
+        </Grid>
+        <Grid Grid.Column="1" HorizontalAlignment="Left" Height="267" Margin="10,73,0,0" VerticalAlignment="Top" Width="650">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Client List:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold"/>
+            <Label Grid.Column="0" Grid.Row="1" Content="First Name:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Height="25" Text="{Binding SelectedClient.FirstName,Mode=TwoWay}" TabIndex="8"/>
+            <Label Grid.Column="0"  Grid.Row="2" Content="Last Name:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="2" Height="25" Text="{Binding SelectedClient.LastName,Mode=TwoWay}" TabIndex="9"/>
+            <Label Grid.Row="1" Grid.Column="3" Content="Contact Number:"  HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="1" Height="25" Margin="0,0,0,0" Text="{Binding SelectedClient.Phone,Mode=TwoWay}" TabIndex="10"/>
+            <Label Grid.Row="2" Grid.Column="3" Content="Email:"  HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="2" Height="25" Margin="0,0,0,0" Text="{Binding SelectedClient.Email,Mode=TwoWay}" TabIndex="11"/>
+            <Label Grid.Column="0" Grid.Row="3" Content="Gender:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="3" Height="25" Grid.Column="1"  Margin="0,0,0,0" ItemsSource="{Binding GenderCollection}" Text="{Binding Path=SelectedClient.Gender,Mode=TwoWay}" Width="50px" HorizontalAlignment="Left"/>
+            <Label Grid.Column="0" Content="Location:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Grid.Row="4"/>
+            <Label Grid.Column="0" Grid.Row="5" Content="City:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="5" Height="25" Grid.Column="1"  Margin="0,0,0,0" ItemsSource="{Binding Location.CityCollection}" SelectedItem="{Binding Location.SelectedCity, Mode=TwoWay}" HorizontalAlignment="Stretch"/>
+            <Label Grid.Column="3" Grid.Row="5" Content="Location:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="5" Height="25" Grid.Column="4"  Margin="0,0,0,0"  ItemsSource="{Binding Location.LocationCollection}" SelectedItem="{Binding Location.SelectedLocation, Mode=TwoWay}" DisplayMemberPath="Description" HorizontalAlignment="Stretch" />
+            <Grid Grid.Column="0" Grid.ColumnSpan="5" Grid.Row="6">
+                <Button  Height="25" Width="100" HorizontalAlignment="Right" Content="Update" Margin="0,0,10,10" VerticalAlignment="Bottom" Command="{Binding UpdateCommand}" CommandParameter="{Binding ElementName=UpdateClientWindow}"/>
+                <Button IsEnabled="{x:Static sessions:Session.Admin}" Height="25" Width="100" HorizontalAlignment="Right" Content="Delete" Margin="0,0,250,10" VerticalAlignment="Bottom" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=UpdateClientWindow}"/>
+                <Button Height="25" Width="100" HorizontalAlignment="Right" Content="New Job" Margin="0,0,130,10" VerticalAlignment="Bottom" Grid.ColumnSpan="3" Command="{Binding AddJobCommand}"/>
+            </Grid>
+        </Grid>
+        <Border BorderBrush="#4B7885" BorderThickness="1" Grid.ColumnSpan="2"/>
+    </Grid>
+</Window>

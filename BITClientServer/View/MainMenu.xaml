@@ -1,0 +1,561 @@
+﻿<Window x:Class="BITClientServer.View.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BITClientServer.View"
+        xmlns:viewModel="clr-namespace:BITClientServer.ViewModel"
+        xmlns:sessions="clr-namespace:BITClientServer.Model"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="BIT Services" Height="720" Width="1280" Background="#FFF" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="../Resources/favicon.ico">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="TabItem.Static.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#F0F0F0" Offset="0.0"/>
+            <GradientStop Color="#E5E5E5" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="TabItem.Static.Border" Color="#4B7885"/>
+        <LinearGradientBrush x:Key="TabItem.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#ECF4FC" Offset="0.0"/>
+            <GradientStop Color="#DCECFC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#7EB4EA"/>
+        <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="#F0F0F0"/>
+        <SolidColorBrush x:Key="TabItem.Disabled.Border" Color="#D9D9D9"/>
+        <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#4B7885"/>
+        <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FFD0D7DF"/>
+        <Style x:Key="TabItemStyle1" TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="6,2,6,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                            <Border x:Name="mainBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{TemplateBinding Background}" Margin="0">
+                                <Border x:Name="innerBorder" BorderBrush="{StaticResource TabItem.Selected.Border}" BorderThickness="1,1,1,0" Background="{StaticResource TabItem.Selected.Background}" Margin="-1" Opacity="0"/>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="-2,-2,0,-2"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="-2,0,-2,-2"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="0,-2,-2,-2"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="-2,-2,-2,0"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid  Width="1250" Height="670" Background="#EBEEF2" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border BorderBrush="#4B7885" BorderThickness="1"/>
+        <TabControl HorizontalAlignment="Center" Margin="10" VerticalAlignment="Center" TabStripPlacement="Bottom" Height="640" Width="1220" BorderBrush="#FF4B7885">
+
+            <!-- ======================================== CLIENT ======================================== -->
+            <TabItem x:Name="tbClient" Header="Client" Background="White" Width="80" FontSize="12" Style="{DynamicResource TabItemStyle1}">
+                <StackPanel Margin="-2.5,-2.5,-3,0">
+                    <Grid Background="#F47840">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+                        <Label Grid.Column="0" Content="CLIENT" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+                    </Grid>
+                    <Grid Margin="10,10,10,10" HorizontalAlignment="Stretch">
+                        <TextBox Text="{Binding SearchString, Mode=TwoWay}" VerticalContentAlignment="Center" Width="200" Height="25" HorizontalAlignment="Left" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+                        <ComboBox Width="150" Height="25" HorizontalAlignment="Left" Margin="220,0,0,0" ItemsSource="{Binding SearchFields}" SelectedValuePath="Value" DisplayMemberPath="Key"  SelectedValue="{Binding SelectedField, Mode=TwoWay}" />
+                        <Button Content="Search" Width="75" HorizontalAlignment="Left" Margin="390,0,0,0.913" Command="{Binding SearchCommand}"/>
+                        <Button x:Name="BtnAddClient" Width="100" Height="25" Content="New" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Right" Command="{Binding AddClientCommand}"/>
+                    </Grid>
+
+                    <ListView x:Name="LstClient" Height="500" Margin="10,0,9.617,0" BorderBrush="#4B7885" ItemsSource="{Binding ClientCollection}" SelectedItem="{Binding SelectedClient, Mode=TwoWay}" Background="White" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                    Command="{Binding ShowClientCommand}"
+                                    CommandParameter="{Binding ElementName=LstClient, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn Header="CompanyID" DisplayMemberBinding="{Binding Path=Company.CompanyId}"/>
+                                    <GridViewColumn Header="Company" DisplayMemberBinding="{Binding Path=Company.Name}"/>
+                                    <GridViewColumn Header="Street" DisplayMemberBinding="{Binding Path=Company.Street}"/>
+                                    <GridViewColumn Header="Suburb" DisplayMemberBinding="{Binding Path=Company.Suburb}"/>
+                                    <GridViewColumn Header="State" DisplayMemberBinding="{Binding Path=Company.State}"/>
+                                    <GridViewColumn Header="Postcode" DisplayMemberBinding="{Binding Path=Company.Postcode}"/>
+                                    <GridViewColumn Header="Branch" DisplayMemberBinding="{Binding Path=Company.Branch}"/>
+                                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Company.Description}"/>
+                                    <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Path=Company.Location.Description}"/>
+                                    <GridViewColumn Header="ClientID" DisplayMemberBinding="{Binding Path=ClientId}" />
+                                    <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                                    <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Path=LastName}"/>
+                                    <GridViewColumn Header="Phone Number" DisplayMemberBinding="{Binding Path=Phone}"/>
+                                    <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path=Email}"/>
+                                    <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Path=Gender}"/>
+
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+
+            <!-- ====================================== CONTRACTOR ====================================== -->
+            <TabItem x:Name="tbContractor" Header="Contractor" Background="White" Width="80" FontSize="12" Style="{DynamicResource TabItemStyle1}">
+                <StackPanel Margin="-2.5,-2.5,-3,0">
+                    <Grid Background="#F47840">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+                        <Label Grid.Column="0" Content="CONTRACTOR" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+                    </Grid>
+                    <Grid Margin="10,10,10,10" HorizontalAlignment="Stretch">
+                        <TextBox Text="{Binding SearchString, Mode=TwoWay}" VerticalContentAlignment="Center" Width="200" Height="25" HorizontalAlignment="Left" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+                        <ComboBox Width="150" Height="25" HorizontalAlignment="Left" Margin="220,0,0,0" ItemsSource="{Binding SearchFields}" SelectedValuePath="Value" DisplayMemberPath="Key"  SelectedValue="{Binding SelectedField, Mode=TwoWay}" />
+                        <Button Content="Search" Width="75" HorizontalAlignment="Left" Margin="390,0,0,0.913" Command="{Binding SearchCommand}"/>
+                        <Button x:Name="BtnAddContractor" Width="100" Content="New" Margin="0,0,0,0" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" Command="{Binding AddContractorCommand}"/>
+                    </Grid>
+
+                    <ListView x:Name="LstContractor" Height="500" Margin="10,0,10,0" BorderBrush="#4B7885" ItemsSource="{Binding ContractorCollection}" SelectedItem="{Binding SelectedContractor, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                    Command="{Binding ShowContractorCommand}"
+                                    CommandParameter="{Binding ElementName=LstContractor, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ContractorID" DisplayMemberBinding="{Binding Path=ContractorId}"/>
+                                <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                                <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Path=LastName}"/>
+                                <GridViewColumn Header="Street" DisplayMemberBinding="{Binding Path=Street}"/>
+                                <GridViewColumn Header="Suburb" DisplayMemberBinding="{Binding Path=Suburb}"/>
+                                <GridViewColumn Header="State" DisplayMemberBinding="{Binding Path=State}"/>
+                                <GridViewColumn Header="Postcode" DisplayMemberBinding="{Binding Path=Postcode}"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path=Email}"/>
+                                <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Path=Phone}"/>
+                                <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Path=Gender}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </StackPanel>
+            </TabItem>
+
+            <!-- ====================================== COORDINATOR ====================================== -->
+            <TabItem x:Name="tbCoordinator" Header="Coordinator" Background="White" Width="80" FontSize="12" Style="{DynamicResource TabItemStyle1}">
+                <StackPanel Margin="-2.5,-2.5,-3,0">
+                    <Grid Background="#F47840">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+                        <Label Grid.Column="0" Content="COORDINATOR" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+                    </Grid>
+                    <Grid Margin="10,10,10,10" HorizontalAlignment="Stretch">
+                        <TextBox Text="{Binding SearchString, Mode=TwoWay}" VerticalContentAlignment="Center" Width="200" Height="25" HorizontalAlignment="Left" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+                        <ComboBox Width="150" Height="25" HorizontalAlignment="Left" Margin="220,0,0,0" ItemsSource="{Binding SearchFields}" SelectedValuePath="Value" DisplayMemberPath="Key"  SelectedValue="{Binding SelectedField, Mode=TwoWay}" />
+                        <Button Content="Search" Width="75" HorizontalAlignment="Left" Margin="390,0,0,0.913" Command="{Binding SearchCommand}"/>
+                        <Button x:Name="BtnAddCoordinator" HorizontalAlignment="Right" Width="100" Height="25" Content="New" Margin="0,0,-0.383,0" VerticalAlignment="Top" Command="{Binding AddCoordinatorCommand}"/>
+                    </Grid>
+
+                    <ListView x:Name="LstCoordinator" Height="500" Margin="10,0,10,0" BorderBrush="#4B7885" ItemsSource="{Binding CoordinatorCollection}" SelectedItem="{Binding SelectedCoordinator, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                    Command="{Binding ShowCoordinatorCommand}"
+                                    CommandParameter="{Binding ElementName=LstCoordinator, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="CoordinatorID" DisplayMemberBinding="{Binding Path=CoordinatorId}"/>
+                                <GridViewColumn Header="First Name" DisplayMemberBinding="{Binding Path=FirstName}"/>
+                                <GridViewColumn Header="Last Name" DisplayMemberBinding="{Binding Path=LastName}"/>
+                                <GridViewColumn Header="Street" DisplayMemberBinding="{Binding Path=Street}"/>
+                                <GridViewColumn Header="Suburb" DisplayMemberBinding="{Binding Path=Suburb}"/>
+                                <GridViewColumn Header="State" DisplayMemberBinding="{Binding Path=State}"/>
+                                <GridViewColumn Header="Postcode" DisplayMemberBinding="{Binding Path=Postcode}"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Path=Email}"/>
+                                <GridViewColumn Header="Phone" DisplayMemberBinding="{Binding Path=Phone}"/>
+                                <GridViewColumn Header="Gender" DisplayMemberBinding="{Binding Path=Gender}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+
+            <!-- ========================================== JOB ========================================== -->
+            <TabItem x:Name="tbJob" Header="Job" Background="White" Width="80" FontSize="12" Style="{DynamicResource TabItemStyle1}" >
+                <StackPanel Margin="-2.5,-2.5,-3,0">
+                    <Grid Background="#F47840">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+                        <Label Grid.Column="0" Content="JOB" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+                    </Grid>
+                    <Grid Margin="10,10,10,10" HorizontalAlignment="Stretch">
+                        <TextBox Text="{Binding SearchString, Mode=TwoWay}" VerticalContentAlignment="Center" Width="200" Height="25" HorizontalAlignment="Left" MouseDoubleClick="SelectAddress" GotKeyboardFocus="SelectAddress" PreviewMouseLeftButtonDown="SelectivelyIgnoreMouseButton"/>
+                        <ComboBox Width="150" Height="25" HorizontalAlignment="Left" Margin="220,0,0,0" ItemsSource="{Binding SearchFields}" SelectedValuePath="Value" DisplayMemberPath="Key"  SelectedValue="{Binding SelectedField, Mode=TwoWay}" />
+                        <Button x:Name="BtnJobSearch" Content="Search" Width="75" HorizontalAlignment="Left" Margin="390,0,0,0.913" Command="{Binding SearchCommand}"/>
+                        <Button HorizontalAlignment="Right" Width="100" Height="25" Content="Refresh" Margin="0,0,-0.383,0" VerticalAlignment="Top" Command="{Binding RefreshCommand}"/>
+
+                    </Grid>
+
+                    <ListView x:Name="LstJob" Height="500" Margin="10,0,10,0" BorderBrush="#4B7885" ItemsSource="{Binding JobCollection}" SelectedItem="{Binding SelectedJob, Mode=TwoWay}" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                    Command="{Binding ShowJobCommand}"
+                                    CommandParameter="{Binding ElementName=LstJob, Path=SelectedJob}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="JobID" DisplayMemberBinding="{Binding Path=JobId}"/>
+                                <GridViewColumn Header="CompanyID" DisplayMemberBinding="{Binding Path=Company.CompanyId}"/>
+                                <GridViewColumn Header="Company Name" DisplayMemberBinding="{Binding Path=Company.Name}"/>
+                                <GridViewColumn Header="ClientID" DisplayMemberBinding="{Binding Path=Client.ClientId}"/>
+                                <GridViewColumn Header="Client First Name" DisplayMemberBinding="{Binding Path=Client.FirstName}"/>
+                                <GridViewColumn Header="Client Last Name" DisplayMemberBinding="{Binding Path=Client.LastName}"/>
+                                <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status.Description}"/>
+                                <GridViewColumn Header="Job Category" DisplayMemberBinding="{Binding Path=JobCategory.Description}"/>
+                                <GridViewColumn Header="Start Date" DisplayMemberBinding="{Binding Path=StringStartDate}"/>
+                                <GridViewColumn Header="Duration" DisplayMemberBinding="{Binding Path=StringDuration}"/>
+                                <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding Path=StringPreferredEndDate}"/>
+                                <GridViewColumn Header="Estimated Duration" DisplayMemberBinding="{Binding Path=StringEstimatedDuration}"/>
+                                <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                                <GridViewColumn Header="Feedback" DisplayMemberBinding="{Binding Path=Feedback}"/>
+                                <GridViewColumn Header="Logged Km's" DisplayMemberBinding="{Binding Path=StringLoggedKm}"/>
+                                <GridViewColumn Header="Job Rating" DisplayMemberBinding="{Binding Path=StringJobRating}"/>
+                                <GridViewColumn Header="ContractorID" DisplayMemberBinding="{Binding Path=StringContractor}"/>
+                                <GridViewColumn Header="Contractor First Name" DisplayMemberBinding="{Binding Path=Contractor.FirstName}"/>
+                                <GridViewColumn Header="Contractor Last Name" DisplayMemberBinding="{Binding Path=Contractor.LastName}"/>
+                                <GridViewColumn Header="CoordinatorID" DisplayMemberBinding="{Binding Path=Coordinator.CoordinatorId}"/>
+                                <GridViewColumn Header="Coordinator First Name" DisplayMemberBinding="{Binding Path=Coordinator.FirstName}"/>
+                                <GridViewColumn Header="Coordinator Last Name" DisplayMemberBinding="{Binding Path=Coordinator.LastName}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </StackPanel>
+            </TabItem>
+
+            <!-- ======================================= ROSTER ======================================= -->
+            <TabItem x:Name="tbAdmin" 
+                     IsEnabled="{x:Static sessions:Session.Admin}" Header="Admin" Width="80" Background="White" FontSize="12" Style="{DynamicResource TabItemStyle1}">
+                <StackPanel Margin="-2.5,-2.5,-3,0">
+                    <Grid Background="#F47840">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+                        <Label Grid.Column="0" Content="ADMIN" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                        <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+                    </Grid>
+                    <Grid Margin="10,10,10,10" Height="540">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox x:Name="gbJobCat" Grid.Row="0" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Header="Job Categories/Skills">
+                            <Grid Margin="10,10,10,10" Height="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="White" ItemsSource="{Binding JobCategoryCollection}" SelectedItem="{Binding SelectedJobCategory, Mode=TwoWay}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Job Category ID" DisplayMemberBinding="{Binding Path=JobCatId}"/>
+                                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                                            <GridViewColumn Header="Active" DisplayMemberBinding="{Binding Path=Active}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Description:" Height="35" Margin="10,0,7,0" Grid.Column="0" FontSize="13" Grid.Row="0" HorizontalContentAlignment="Left"/>
+                                    <TextBox Grid.Column="1" Height="25" Margin="0,0,10,0" Grid.ColumnSpan="3" Grid.Row="0" Text="{Binding ChangeJobCategory.Description, Mode=TwoWay}" />
+                                    <Label Content="Active:" Height="35" Margin="0,0,7,0" Grid.Column="5" FontSize="13" Grid.Row="0" HorizontalContentAlignment="Left"/>
+                                    <CheckBox Grid.Column="5" Height="15" Width="15"  Margin="30,0,10,0" FontSize="13" Grid.Row="0" IsChecked="{Binding ChangeJobCategory.Active, Mode=TwoWay}"/>
+                                    <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="1">
+                                        <Button  Height="25" Width="100" HorizontalAlignment="Right" Content="Add" Margin="0,0,10,10" VerticalAlignment="Bottom" Command="{Binding AddCommand}"/>
+                                        <Button Height="25" Width="100" HorizontalAlignment="Right" Content="Update" Margin="0,0,130,10" VerticalAlignment="Bottom" Command="{Binding UpdateCommand}"/>
+                                        <Button Height="25" Width="100" HorizontalAlignment="Right" Content="Delete" Margin="0,0,250,10" VerticalAlignment="Bottom" Grid.ColumnSpan="3" Command="{Binding DeleteCommand}"/>
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox x:Name="gbLocation" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Header="Locations">
+                            <Grid Margin="10,10,10,10" Height="auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Background="White" ItemsSource="{Binding LocationCollection}" SelectedItem="{Binding SelectedLocation, Mode=TwoWay}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="Location ID" DisplayMemberBinding="{Binding Path=LocationId}"/>
+                                            <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Path=Description}"/>
+                                            <GridViewColumn Header="City" DisplayMemberBinding="{Binding Path=City}"/>
+                                            <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Active}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50.087"/>
+                                        <RowDefinition/>
+
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Description:" Height="35" Margin="10,0,7,0" Grid.Column="0" FontSize="13" Grid.Row="0" HorizontalContentAlignment="Left"/>
+                                    <TextBox Grid.Column="1" Height="25" Margin="0,0,10,0" Grid.ColumnSpan="3" FontSize="13" Grid.Row="0" Text="{Binding ChangeLocation.Description, Mode=TwoWay}"/>
+                                    <Label Content="Active:" Height="35" Margin="0,0,7,0" Grid.Column="5" FontSize="13" Grid.Row="0" HorizontalContentAlignment="Left"/>
+                                    <CheckBox Grid.Column="5" Height="15" Width="15"  Margin="30,0,10,0" FontSize="13" Grid.Row="0" IsChecked="{Binding ChangeLocation.Active, Mode=TwoWay}"/>
+                                    <Grid Grid.Column="0" Grid.ColumnSpan="6" Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="267*"/>
+                                            <ColumnDefinition Width="301*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Content="City:" Height="35" Margin="10,7,6.652,7.252" FontSize="13" Grid.Row="0" HorizontalContentAlignment="Left" Grid.ColumnSpan="2"/>
+                                        <TextBox Grid.Column="0" Height="25" Margin="50,12,0,12.252" Width="150" HorizontalAlignment="Left" FontSize="13" Grid.Row="0" Text="{Binding ChangeLocation.City, Mode=TwoWay}"/>
+                                        <Button  Height="25" Width="100" HorizontalAlignment="Right" Content="Add" Margin="0,0,9.652,10.252" VerticalAlignment="Bottom" Command="{Binding AddCommand}" Grid.Column="1"/>
+                                        <Button Height="25" Width="100" HorizontalAlignment="Right" Content="Update" Margin="0,0,129.652,10.252" VerticalAlignment="Bottom" Command="{Binding UpdateCommand}" Grid.Column="1"/>
+                                        <Button Height="25" Width="100" HorizontalAlignment="Right" Content="Delete" Margin="0,0,249.652,10.252" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Command="{Binding DeleteCommand}"/>
+                                    </Grid>
+
+                                </Grid>
+
+                            </Grid>
+                        </GroupBox>
+
+                    </Grid>
+
+                </StackPanel>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+
+</Window>

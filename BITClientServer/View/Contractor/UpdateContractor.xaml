@@ -1,0 +1,190 @@
+﻿<Window x:Class="BITClientServer.View.Contractor.UpdateContractor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BITClientServer.View.Contractor"
+        xmlns:sessions="clr-namespace:BITClientServer.Model"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        Title="Contractor Details" Height="560" Width="1290" WindowStartupLocation="CenterScreen"
+        x:Name="UpdateContractorWindow" Icon="../../Resources/favicon.ico">
+    <Grid Width="1260" Height="510" Background="#EBEEF2" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+
+            <RowDefinition Height="0.1*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Background="#F47840" Height="56" VerticalAlignment="Top" ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.1*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="#FFBC5C31" BorderThickness="1" Grid.ColumnSpan="2"/>
+            <Label Grid.Column="0" Content="CONTRACTOR DETAILS" FontSize="35" FontWeight="SemiBold" Foreground="#FFF" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+            <Image Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Height="45" Margin="0,0,10,0" Width="148" Source="/BITClientServer;component/Resources/BITLogoLone.png" />
+        </Grid>
+
+        <Grid HorizontalAlignment="Left" Height="380" Margin="10,73,0,0" VerticalAlignment="Top" Width="650">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="First Name:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="0" Height="25" Text="{Binding SelectedContractor.FirstName,Mode=TwoWay}" TabIndex="1"/>
+            <Label Grid.Row="1" Content="Last Name:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="1" Grid.Row="1" Height="25" Text="{Binding SelectedContractor.LastName,Mode=TwoWay}" TabIndex="2"/>
+            <Label Grid.Row="0" Grid.Column="3" Content="Contact Number:"  HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="0" Height="25" Margin="0,0,0,0" Text="{Binding SelectedContractor.Phone,Mode=TwoWay}" TabIndex="6"/>
+            <Label Grid.Row="1" Grid.Column="3" Content="Email:"  HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Column="4" Grid.Row="1" Height="25" Margin="0,0,0,0" Text="{Binding SelectedContractor.Email,Mode=TwoWay}" TabIndex="7"/>
+            <Label Grid.Column="0"  Grid.Row="3" Content="Suburb:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedContractor.Suburb,Mode=TwoWay}" TabIndex="4"/>
+            <Label Grid.Column="0" Grid.Row="2" Content="Address:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedContractor.Street,Mode=TwoWay}" TabIndex="3"/>
+            <Label Grid.Column="0" Grid.Row="4" Content="Postcode" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Height="25" Grid.Column="1"  Margin="0,0,0,0" Text="{Binding SelectedContractor.Postcode,Mode=TwoWay}" TabIndex="5"/>
+            <Label Grid.Column="0" Grid.Row="5" Content="State:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="5" Height="25" Grid.Column="1"  Margin="0,0,0,0" ItemsSource="{Binding LocationViewModel.StateCollection}" Text="{Binding SelectedContractor.State,Mode=TwoWay}"/>
+            <Label Grid.Column="3" Grid.Row="2" Content="BSB:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="2" Height="25" Grid.Column="4"  Margin="0,0,0,0" Text="{Binding SelectedContractor.AccBSB,Mode=TwoWay}" TabIndex="8"/>
+            <Label Grid.Column="3" Grid.Row="3" Content="Account Number:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="3" Height="25" Grid.Column="4"  Margin="0,0,0,0" Text="{Binding SelectedContractor.AccNumber,Mode=TwoWay}" TabIndex="9"/>
+            <Label Grid.Column="3" Grid.Row="4" Content="Account Name:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <TextBox Grid.Row="4" Height="25" Grid.Column="4"  Margin="0,0,0,0" Text="{Binding SelectedContractor.AccName,Mode=TwoWay}" TabIndex="10"/>
+
+            <Label Grid.Column="3" Grid.Row="5" Content="Gender:" HorizontalAlignment="Left" Margin="10,0,0,0" FontSize="13" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="5" Height="25" Grid.Column="4"  Margin="0,0,0,0" ItemsSource="{Binding GenderCollection}" Text="{Binding Path=SelectedContractor.Gender,Mode=TwoWay}" Width="50px" HorizontalAlignment="Left"/>
+
+        </Grid>
+        
+        <!--<Grid Grid.Column="1" Grid.Row="0" Margin="10,73,0,0" Height="330">-->
+        <TabControl Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" Height="380" Margin="10,73,0,0" VerticalAlignment="Top" Width="580" Background="#EBEEF2">
+            <TabItem Header="Locations" Background="White" Width="80" FontSize="12" TabIndex="11">
+                <Grid Grid.Row="1" Grid.Column="0" Margin="10,10,10,10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="36*"/>
+                        <ColumnDefinition Width="252*"/>
+                        <ColumnDefinition Width="291*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" Content="Preferred Locations" HorizontalAlignment="Left" Margin="7,0,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Grid.RowSpan="2"/>
+                    <Label Content="Location List" Grid.Column="1"  Margin="7.33,1.452,9.67,0.93" FontSize="13" Grid.ColumnSpan="2" Grid.Row="1"/>
+                    <Label Content="Selected Locations" Grid.Column="3"  Margin="10.33,1.452,10.174,0.93" FontSize="13" Grid.Row="1"/>
+                    <ComboBox x:Name="cboAContractorCity" Grid.Column="1" Grid.Row="2" Margin="7.33,0.07,8.67,0.2" ItemsSource="{Binding LocationViewModel.CityCollection}" SelectedItem="{Binding LocationViewModel.SelectedCity, Mode=TwoWay}" VerticalContentAlignment="Center" Grid.ColumnSpan="2" />
+                    <ListView x:Name="lstAContractorLocation" HorizontalAlignment="Stretch" Margin="10.33,27.07,10.174,9.339" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" ItemsSource="{Binding LocationViewModel.LocationCollection}" SelectedItem="{Binding LocationViewModel.SelectedLocation, Mode=TwoWay}" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                            Command="{Binding LocationViewModel.AddLocationToListCommand}"
+                            CommandParameter="{Binding ElementName=lstAContractorLocation, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="165" Header="Name" DisplayMemberBinding="{Binding Path=Description}"/>
+                                <GridViewColumn Width="100" Header="City" DisplayMemberBinding="{Binding Path=City}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView x:Name="lstAContractorPrefLocation" HorizontalAlignment="Stretch" Margin="10.33,0.07,10.174,9.339" Grid.Row="2" Grid.RowSpan="2"  Grid.Column="3" VerticalAlignment="Stretch"  ItemsSource="{Binding LocationViewModel.PrefLocationCollection}" SelectedItem="{Binding LocationViewModel.SelectedPrefLocation, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                            Command="{Binding LocationViewModel.RemoveLocationFromListCommand}"
+                            CommandParameter="{Binding ElementName=lstAContractorPrefLocation, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="165" Header="Name" DisplayMemberBinding="{Binding Path=Description}"/>
+                                <GridViewColumn Width="100" Header="City" DisplayMemberBinding="{Binding Path=City}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Skills" Background="White" Width="80" FontSize="12" TabIndex="12">
+                <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="36*"/>
+                        <ColumnDefinition Width="252*"/>
+                        <ColumnDefinition Width="291*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="9*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="0" Content="Preferred Skills" HorizontalAlignment="Left" Margin="7,0,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Grid.RowSpan="2"/>
+                    <Label Content="Skill List" Grid.Column="1"  Margin="7.33,1.452,9.67,0.93" FontSize="13" Grid.ColumnSpan="2" Grid.Row="1"/>
+                    <Label Content="Selected Skill" Grid.Column="3"  Margin="10.33,1.452,10.174,0.93" FontSize="13" Grid.Row="1"/>
+
+                    <ListView x:Name="lstAContractorJobCategory" HorizontalAlignment="Stretch" Margin="10.33,0.07,10.174,9.339" Grid.Row="2" Grid.Column="1" VerticalAlignment="Stretch" ItemsSource="{Binding JobCatViewModel.JobCategoryCollection}" SelectedItem="{Binding JobCatViewModel.SelectedJobCategory, Mode=TwoWay}" Grid.ColumnSpan="2" Grid.RowSpan="2" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                            Command="{Binding JobCatViewModel.AddJobCategoryToListCommand}"
+                            CommandParameter="{Binding ElementName=lstAContractorJobCategory, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="265" Header="Name" DisplayMemberBinding="{Binding Path=Description}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <ListView x:Name="lstAContractorPrefJobCategory" HorizontalAlignment="Stretch" Margin="10.33,0.07,10.174,10" Grid.Row="2" Grid.RowSpan="2"  Grid.Column="3" VerticalAlignment="Stretch"  ItemsSource="{Binding JobCatViewModel.PrefJobCategoryCollection}" SelectedItem="{Binding JobCatViewModel.SelectedPrefJobCategory, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                            Command="{Binding JobCatViewModel.RemoveJobCategoryFromListCommand}"
+                            CommandParameter="{Binding ElementName=lstAContractorPrefJobCategory, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="265" Header="Name" DisplayMemberBinding="{Binding Path=Description}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <Button Height="25" Width="100" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="0,0,10,10" VerticalAlignment="Bottom" Content="Update" Command="{Binding UpdateCommand}" CommandParameter="{Binding ElementName=UpdateContractorWindow}" TabIndex="13"/>
+        <Button x:Name="btnDelete" Height="25" Width="100" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="0,0,250,10" VerticalAlignment="Bottom" Content="Delete" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=UpdateContractorWindow}" 
+                IsEnabled="{x:Static sessions:Session.Admin}" TabIndex="15"/>
+        <Button Height="25" Width="100" HorizontalAlignment="Right" Grid.Row="1" Grid.Column="1" Margin="0,0,130,10" VerticalAlignment="Bottom" Content="Availability" Command="{Binding AvailabilityCommand}" TabIndex="14"/>
+        <Border BorderBrush="#4B7885" BorderThickness="1" Grid.ColumnSpan="2" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,0,0"/>
+    </Grid>
+</Window>
